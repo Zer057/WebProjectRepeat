@@ -1,0 +1,38 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Return & Refund{% endblock %}
+
+{% block content %}
+<h2>Return / Refund</h2>
+
+{% if success %}
+<div class="alert alert-success">Return request submitted successfully!</div>
+{% endif %}
+
+<h4>Your Order History</h4>
+{% for order in orders %}
+    <div class="card mb-3">
+        <div class="card-header">
+            Order #{{ order.id }} - Status: {{ order.status }}
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+            {% for item in order.items.all %}
+                <li class="list-group-item">
+                    {{ item.product.name }} - Quantity: {{ item.quantity }} - Price: €{{ item.price }}
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% empty %}
+    <p>You have no orders yet.</p>
+{% endfor %}
+
+<h4>Submit a Return Request</h4>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary mt-2">Submit Return</button>
+</form>
+{% endblock %}

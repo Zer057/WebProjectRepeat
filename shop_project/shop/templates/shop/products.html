@@ -1,0 +1,24 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Products - MyShop{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Products</h1>
+<div class="row">
+    {% for product in products %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <img src="https://via.placeholder.com/350x200" class="card-img-top" alt="{{ product.name }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">{{ product.description }}</p>
+                <p class="fw-bold">${{ product.price }}</p>
+               <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary">Add to Cart</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>No products available.</p>
+    {% endfor %}
+</div>
+{% endblock %}
